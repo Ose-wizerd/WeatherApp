@@ -89,6 +89,18 @@
         color: #fff; 
       }
 
+          .error {
+        display: none;
+        text-align: center;
+        margin-top: 20px;
+      }
+      .error p {
+        color: #ff4d4d;
+        font-size: 18px;
+        margin: 0;
+      }
+      
+
     </style>
   </head>
   <body>
@@ -101,10 +113,15 @@
         />
         <button><img src="img/search.png" alt="search button" /></button>
       </div>
+
+        <div class="error">
+        <p>Invalid city name</p>
+      </div>
+
       <div class="weather">
         <img src="img/rain.png" class="weather-icon" />
         <h1 class="temp">22°C</h1>
-        <h2 class="city">New York</h2>
+        <h2 class="city">Addis Ababa</h2>
       </div>
       <div class="details">
 
@@ -138,6 +155,18 @@
 
       async function checkweather(city){
         const response=await fetch(apiurl+ city + `&appid=${apikey}`);
+        
+        if(response.status==404){
+          document.querySelector('.error').style.display='block';
+          document.querySelector('.weather').style.display='none';
+          document.querySelector('.details').style.display='none';
+        }
+        else{
+          document.querySelector('.error').style.display='none';
+          document.querySelector('.weather').style.display='block';
+          document.querySelector('.details').style.display='flex';
+        }
+        
         var data = await response.json();
         // console.log(data);
 
